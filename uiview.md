@@ -30,7 +30,12 @@ UIView表示屏幕上的一块矩形区域，它在App中占有绝对重要的�
     - (void)bringSubviewToFront:(UIView *)view;
     - (void)sendSubviewToBack:(UIView *)view;
     
-    
+讲一个元素从它的父容器中移除也非常的简单
 
+    - (void)removeFromSuperview;
+
+如果要获取一个元素的子元素，需要借助`UIView`的`tag`属性：
+
+    - (nullable __kindof UIView *)viewWithTag:(NSInteger)tag; 
 
 ## 布局
