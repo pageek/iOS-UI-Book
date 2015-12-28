@@ -30,12 +30,7 @@ UIView表示屏幕上的一块矩形区域，它在App中占有绝对重要的�
     - (void)bringSubviewToFront:(UIView *)view;
     - (void)sendSubviewToBack:(UIView *)view;
     
-   
-通常在计算中会有浮点数出现在`CGRect`当中，浮点数值的出现会引起屏幕渲染时文本或者图片边缘的模糊，可以使用:
- 
-    CGRect CGRectIntegral(CGRect rect) 
-     
-得到一个包含当前`CGRect`最小的，并且坐标和宽高都是整数的`CGRect`。 
+    
 
 
 ## 布局
