@@ -39,3 +39,21 @@ UIView表示屏幕上的一块矩形区域，它在App中占有绝对重要的�
     - (nullable __kindof UIView *)viewWithTag:(NSInteger)tag; 
 
 ## 布局
+
+
+#### layoutsubviews
+
+所有关于子元素的布局都应该通过重写`layoutSubviews`来实现。
+
+> (This method) Lays out subviews.
+
+> Subclasses can override this method as needed to perform more precise layout of their subviews. You should override this method only if the autoresizing and constraint-based behaviors of the subviews DO NOT offer the behavior you want. You can use your implementation to set the frame rectangles of your subviews directly.
+
+> 以上节选自 UIView Class Reference
+    
+    
+`layoutSubviews` 的主要功能就是让程序员自己实现子 `UIViews` 的布局算法，从而在需要重新布局的时候，父 `UIView` 会按照这个流程重新布局自己的子 `UIViews`。
+
+而且，`layoutSubviews` 方法**只能被系统触发调用，程序员不能手动直接调用**该方法。要引起该方法的调用，可以调用 `UIView` 的 `setNeedsLayout` 方法来标记一个 `UIView`。这样一来，在 UI 线程的下次绘制循环中，系统便会调用该 `UIView` 的 `layoutSubviews` 方法。
+
+
