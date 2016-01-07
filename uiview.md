@@ -64,7 +64,7 @@ UIView表示屏幕上的一块矩形区域，它在App中占有绝对重要的�
 
 
 #### 调用
-当一个元素的`frame` 依赖于内容的时候，比如一个用来显示用户姓名的`nameLabel`被重新赋值后，就需要标记要重新计算布局。
+
 
 标记一个`UIView`需要重新布局的方法有：
 
@@ -76,10 +76,11 @@ UIView表示屏幕上的一块矩形区域，它在App中占有绝对重要的�
 * `layoutIfNeeded`
 
     如果，有需要刷新的标记，立即调用layoutSubviews进行布局
-    
 
-    -(void)setName{
-        nameLabel.text = @"姓名";
+当一个元素的`frame`依赖于内容的时候，比如一个用来显示用户姓名的`nameLabel`被重新赋值后，就需要标记要重新计算布局。例如：
+
+    -(void)setName:(NSString *)name{
+        nameLabel.text = name;
         [self setNeedsLayout];
     }
 
