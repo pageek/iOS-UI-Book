@@ -56,4 +56,45 @@ UIView表示屏幕上的一块矩形区域，它在App中占有绝对重要的�
 
 而且，`layoutSubviews` 方法**只能被系统触发调用，程序员不能手动直接调用**该方法。要引起该方法的调用，可以调用 `UIView` 的 `setNeedsLayout` 方法来标记一个 `UIView`。这样一来，在 UI 线程的下次绘制循环中，系统便会调用该 `UIView` 的 `layoutSubviews` 方法。
 
+在这些情况下，会调用`layoutSubviews`:
+* `addSubview` 或类似的添加子元素的操作
+* 当前View的`frame`发生改变
+* 滚动`UIScrollView`
+* 当前View的子元素的`frame`发生改变
 
+
+#### 调用
+当一个元素的`frame` 依赖于内容的时候，比如一个用来显示用户姓名的`nameLabel`被重新赋值后，就需要标记要重新计算布局。
+
+标记一个`UIView`需要重新布局的方法有：
+
+* `setNeedsLayout`
+
+    标记为需要重新布局，不立即刷新，但layoutSubviews一定会被调用
+配合layoutIfNeeded立即更新
+
+* `layoutIfNeeded`
+
+    如果，有需要刷新的标记，立即调用layoutSubviews进行布局
+    
+
+    -(void)setName{
+        nameLabel.text = @"姓名";
+        [self setNeedsLayout];
+    }
+
+#### 技巧
+
+因为改变元素的`frame`会引起`layoutSubviews`，在`layoutSubviews`里面，我们可以认为当前元素的`frame`已经被设置到最合适的大小了，所以我们可以在这里计算一些子元素相对父元素位置的`frame`。
+
+比如，我们希望`nameLabel`相对于父容器垂直居中，并且宽度跟父容器大小一致:
+
+    -(void)layoutSubviews{
+        
+        [nameLabel sizeToFits];
+        nameLabel.frame = CGRectMake(0,
+                                (CGRectGetHeight(self.frame) - CGRectGetHeight(viewA.frame))/2,
+                                CGRectGetWidth(self.frame),
+                                CGRectGetHeight(viewA.frame)
+                                );
+    }
